@@ -8,10 +8,10 @@ BASE_URL = "https://www.hltv.org"
 class HLTVMatch(Parser):
     def __init__(self, url):
         self.match_url = url
+        self.match_id = self.match_url.split('/')[2]
         self.teams_name = None
         self.teams_link = None
         self.analytics_center_link = None
-        self.match_id = self.match_url.split('/')[2]
         self.match_maps = None
         self.datetime = None
         self.__get_match_attributes()

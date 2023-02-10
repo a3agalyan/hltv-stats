@@ -1,7 +1,6 @@
 import os
 from datetime import datetime, timedelta
 from cuid import cuid
-from typeguard import typechecked
 from .parser import Parser
 
 BASE_URL = "https://www.hltv.org"
@@ -40,7 +39,6 @@ class HLTVTeam(Parser):
         end_date = datetime.strftime(date, '%Y-%m-%d')
         return f'?startDate={start_date}&endDate={end_date}'
 
-    @typechecked
     def parse_all_stats(self, time_filter: int, filename: str = None):
         """ Parse all stats for team
         :param time_filter: 0 - all time, 1 - last month, 2 - last 2 months, 3 - last 3 months
