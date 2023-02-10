@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "hltv-stats"
+version = "0.1.0"
+description = "Simple parser for HLTV.org team stats and matches (using requests and bs4)"
+authors = ["Armen A <agalyan.armen@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/a3agalyan/hltv-stats"
+packages = [{include = "hltv_stats"}]
+classifiers = [
+"Development Status :: 5 - Production/Stable",
+"Intended Audience :: Education",
+"Operating System :: OS Independent",
+"License :: OSI Approved :: MIT License",
+"Programming Language :: Python :: 3",
+]
+include = [
+"LICENSE",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.28.2"
+bs4 = "^0.0.1"
+cuid = "^0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

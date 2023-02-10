@@ -1,0 +1,1 @@
+Simple parser for HLTV.org team stats and matches (using requests and bs4)
