@@ -3,7 +3,7 @@ import random
 import time
 import requests
 from bs4 import BeautifulSoup
-
+from loguru import logger
 
 class Parser:
     @staticmethod
@@ -23,6 +23,6 @@ class Parser:
         r = requests.get(url)
         soup = BeautifulSoup(r.text, "html.parser")
         if r.status_code != 200:
-            print(r.status_code, "hltv failed")
+            logger.info("hltv request failed with status code: " + str(r.status_code))
             raise
         return soup

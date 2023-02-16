@@ -1,7 +1,7 @@
 import os
 from hltv_stats import Parser, HLTVMatch, HLTVTeam
 BASE_URL = "https://www.hltv.org"
-
+from loguru import logger
 
 def get_links_upcoming_matches(include_live=True):
     """Get links to random number of live and upcoming(!!!) matches
@@ -15,8 +15,8 @@ def get_links_upcoming_matches(include_live=True):
     for match in matches:
         team_count = match.parent.find_all('div', class_="matchTeamName text-ellipsis")
         if len(team_count) < 2:
-            print(match['href'])
-            print("Invalid match, waiting for teams")
+            logger.info(match['href'])
+            logger.info("Invalid match, waiting for teams")
         else:
             links.append(match['href'])
     if include_live:
@@ -39,10 +39,10 @@ def parse_upcoming_matches(months, with_teams=False):
         os.makedirs(os.path.dirname(teams_path), exist_ok=True)
     matches_link = get_links_upcoming_matches()
     for ind, match_link in enumerate(matches_link):
-        print("parsing :", match_link)
+        logger.info("parsing :", match_link)
         match = HLTVMatch(BASE_URL + match_link)
         if match.is_parsed():
-            print("Match already parsed, skipping")
+            logger.info("Match already parsed, skipping")
             continue
         match.parse_analytics_center(filename=f"{matches_path}/{match.match_id}")
         teams = match.teams_link

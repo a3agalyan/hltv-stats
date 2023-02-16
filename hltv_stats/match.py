@@ -1,6 +1,7 @@
 import os
 from datetime import datetime, timedelta
 from .parser import Parser
+from loguru import logger
 
 BASE_URL = "https://www.hltv.org"
 
@@ -38,21 +39,21 @@ class HLTVMatch(Parser):
             if filename is not None:
                 self._write_to_json(insights, f"{filename}_insights.json")
         except:
-            print("Failed __parse_analytics_summary(), parsed match has non-regular data\n")
+            logger.info("Failed __parse_analytics_summary(), parsed match has non-regular data\n")
         try:
             map_stats = self.parse_pick_ban_stats(soup)
             output.append(map_stats)
             if filename is not None:
                 self._write_to_json(map_stats, f"{filename}_maps_stats.json")
         except:
-            print("Failed __parse_pick_ban_stats(), parsed match has non-regular data\n")
+            logger.info("Failed __parse_pick_ban_stats(), parsed match has non-regular data\n")
         try:
             players_stats = self.parse_head_to_head(soup)
             output.append(players_stats)
             if filename is not None:
                 self._write_to_json(players_stats, f"{filename}_players_stats.json")
         except:
-            print("Failed __parse_head_to_head(), parsed match has non-regular data\n")
+            logger.info("Failed __parse_head_to_head(), parsed match has non-regular data\n")
         return tuple(output)
 
     def parse_analytics_summary(self, soup=None, filename=None):
@@ -137,7 +138,7 @@ class HLTVMatch(Parser):
         try:
             match_dict = Parser()._read_from_json("./configs/matches_config.json")
         except:
-            print("""Created ./configs/match_config.json for mapping""")
+            logger.info("""Created ./configs/match_config.json for mapping""")
             os.makedirs(os.path.dirname("./configs/"), exist_ok=True)
             match_dict = {}
         if self.match_id not in match_dict:

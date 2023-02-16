@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 from cuid import cuid
 from .parser import Parser
-
+from loguru import logger
 BASE_URL = "https://www.hltv.org"
 
 
@@ -21,7 +21,7 @@ class HLTVTeam(Parser):
         try:
             team_dict = self._read_from_json("./configs/team_config.json")
         except:
-            print("""Created ./configs/team_config.json for mapping {"team name" : "unique id"}""")
+            logger.info("""Created ./configs/team_config.json for mapping {"team name" : "unique id"}""")
             os.makedirs(os.path.dirname("./configs/"), exist_ok=True)
             team_dict = {}
         if team_name not in team_dict:
@@ -52,28 +52,28 @@ class HLTVTeam(Parser):
             if filename is not None:
                 self._write_to_json(matches_stats, f"{filename}_matches_stats.json")
         except:
-            print("Failed parse_matches()")
+            logger.info("Failed parse_matches()")
         try:
             maps_stats = self.parse_maps(time_filter)
             output.append(maps_stats)
             if filename is not None:
                 self._write_to_json(maps_stats, f"{filename}_maps_stats.json")
         except:
-            print("Failed parse_maps()")
+            logger.info("Failed parse_maps()")
         try:
             players_stats = self.parse_players(time_filter)
             output.append(players_stats)
             if filename is not None:
                 self._write_to_json(players_stats, f"{filename}_players_stats.json")
         except:
-            print("Failed parse_players()")
+            logger.info("Failed parse_players()")
         try:
             events_stats = self.parse_events(time_filter)
             output.append(events_stats)
             if filename is not None:
                 self._write_to_json(events_stats, f"{filename}_events_stats.json")
         except:
-            print("Failed parse_events()")
+            logger.info("Failed parse_events()")
         return tuple(output)
 
     def parse_matches(self, time_filter=3, filename=None):
